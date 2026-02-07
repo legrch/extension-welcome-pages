@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Screenshot Editor</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f0f0f0;
+      padding: 40px;
+    }
+    h2 {
+      margin-bottom: 16px;
+      font-size: 18px;
+      color: #333;
+    }
+    .info {
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 32px;
+      font-size: 14px;
+      color: #664d03;
+    }
+    .screenshot-block {
+      margin-bottom: 60px;
+    }
+    .screenshot-wrap {
+      position: relative;
+      display: inline-block;
+      line-height: 0;
+    }
+    .screenshot-wrap img.base {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* ======= Screenshot 1 patches ======= */
+    /* Cover "Study Timer" text in extensions dropdown */
+    .patch-1-name {
+      position: absolute;
+      top: 27.8%;
+      left: 60.2%;
+      width: 14%;
+      height: 4%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding-left: 2px;
+      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+      font-size: 12px;
+      color: #202124;
+      line-height: 1;
+    }
+    .patch-1-name img {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+    }
+
+    /* ======= Screenshot 2 patches ======= */
+    /* Cover extension icon + name in toolbar area */
+    .patch-2-icon {
+      position: absolute;
+      top: 5.3%;
+      left: 79.6%;
+      width: 3.5%;
+      height: 5.5%;
+      background: #e8eaed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    .patch-2-icon img {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="info">
+    <b>How to use:</b> Right-click each screenshot below &rarr; "Save image as" or use Mac screenshot (Cmd+Shift+4) to capture each one.
+    The "Study Timer" name and icon are covered with "Speed Auto Clicker" patches.
+    Adjust patch positions in CSS if needed.
+  </div>
+
+  <!-- Screenshot 1: Pin Extension -->
+  <div class="screenshot-block">
+    <h2>Screenshot 1 — Pin Extension (save as screenshot-pin.png)</h2>
+    <div class="screenshot-wrap" id="shot1">
+      <img class="base" src="screenshot-pin.png" alt="Pin extension">
+      <!-- Patch: replace "Study Timer" text + icon -->
+      <div class="patch-1-name">
+        <img src="icon128.png" alt="icon">
+        <span>Autoclicker</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screenshot 2: Open Extension -->
+  <div class="screenshot-block">
+    <h2>Screenshot 2 — Open Extension (save as screenshot-use.png)</h2>
+    <div class="screenshot-wrap" id="shot2">
+      <img class="base" src="screenshot-use.png" alt="Use extension">
+      <!-- Patch: replace toolbar icon -->
+      <div class="patch-2-icon">
+        <img src="icon128.png" alt="icon">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Optional: render to canvas for clean saving
+    // For now, manual screenshot is the simplest approach
+  </script>
+</body>
+</html>
