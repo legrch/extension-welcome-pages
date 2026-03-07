@@ -16,6 +16,7 @@
 
     /* ===== HERO ===== */
     .hero { text-align:center; padding:24px 0 48px; }
+    h1 img { vertical-align:-8px; margin-right:6px; }
     .hero-badge { display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,#06b6d4,#6366f1); color:#fff; font-size:13px; font-weight:700; letter-spacing:.5px; padding:6px 16px; border-radius:20px; margin-bottom:20px; }
     .hero-badge svg { flex-shrink:0; }
     h1 { font-size:44px; font-weight:700; margin-bottom:12px; letter-spacing:-.5px; }
@@ -248,8 +249,8 @@
 
     .anim-active .cyc0 { animation: cycVis0 20s both; }
     .anim-active .cyc1 { animation: cycVis1 20s both; }
-    @keyframes cycVis0 { 0%,87%{opacity:1} 88%,100%{opacity:0} }
-    @keyframes cycVis1 { 0%,87%{opacity:0} 88%,100%{opacity:1} }
+    @keyframes cycVis0 { 0%,75%{opacity:1} 76%,100%{opacity:0} }
+    @keyframes cycVis1 { 0%,75%{opacity:0} 76%,100%{opacity:1} }
 
     .anim-active .wm-play-ico  { animation: icoHide .01s 15.2s both; }
     .anim-active .wm-pause-ico { animation: icoShow .01s 15.2s both; }
@@ -268,9 +269,12 @@
     .anim-active .target.t3::before { animation: rippleFill 2.1s 17.6s ease-out infinite none; }
 
     /* ===== SCROLL HINT ===== */
-    .scroll-hint { text-align:center; padding:16px 0 32px; }
-    .scroll-hint svg { animation:bounce 2s ease-in-out infinite; }
-    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+    .scroll-hint { text-align:center; padding:28px 0 40px; display:flex; flex-direction:column; align-items:center; gap:10px; }
+    .scroll-hint-label { font-size:15px; font-weight:700; letter-spacing:.3px; color:#6366f1; animation:hintFade 2.5s ease-in-out infinite; }
+    .scroll-hint-sub { font-size:13px; color:#9ca3af; margin-top:-4px; }
+    .scroll-hint-arrow { width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg,rgba(99,102,241,.1),rgba(6,182,212,.1)); display:flex; align-items:center; justify-content:center; animation:hintBounce 2s ease-in-out infinite; box-shadow:0 4px 16px rgba(99,102,241,.12); }
+    @keyframes hintBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(10px)} }
+    @keyframes hintFade { 0%,100%{opacity:.6} 50%{opacity:1} }
 
     /* ===== FEATURES GRID ===== */
     .features { margin-top:16px; }
@@ -293,8 +297,46 @@
     .showcase-vis { flex-shrink:0; width:320px; height:220px; border-radius:16px; padding:28px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; box-shadow:0 8px 32px rgba(0,0,0,.08); overflow:hidden; }
 
     /* -- Widget demo (card 1) -- */
-    .wa { width:80px; padding:8px; background:rgba(255,255,255,.92); backdrop-filter:blur(14px); border-radius:32px; box-shadow:0 4px 24px rgba(0,0,0,.12),inset 0 0 0 1px rgba(255,255,255,.5); display:flex; flex-direction:column; align-items:center; gap:5px; }
-    .wa-grip { font-size:9px; color:#c4b5fd; letter-spacing:2px; line-height:1; padding:2px 0; }
+    .wa-scene { position:relative; width:100%; height:100%; }
+    .wa { position:absolute; top:50%; left:calc(100% - 86px); width:80px; padding:8px; background:rgba(255,255,255,.92); backdrop-filter:blur(14px); border-radius:32px; box-shadow:0 4px 24px rgba(0,0,0,.12),inset 0 0 0 1px rgba(255,255,255,.5); display:flex; flex-direction:column; align-items:center; gap:5px; animation:waDrift 10s cubic-bezier(.4,0,.2,1) infinite; transform:translateY(-54%); }
+    @keyframes waDrift {
+      0%,5%   { left:calc(100% - 86px); transform:translateY(-54%) }
+      10%     { left:calc(100% - 86px); transform:translateY(-69%) }
+      15%     { left:calc(100% - 86px); transform:translateY(-44%) }
+      20%     { left:calc(100% - 86px); transform:translateY(-54%) }
+      36%,40% { left:6px; transform:translateY(-54%) }
+      44%     { left:6px; transform:translateY(-64%) }
+      48%     { left:6px; transform:translateY(-46%) }
+      52%     { left:6px; transform:translateY(-54%) }
+      68%     { left:calc(100% - 86px); transform:translateY(-54%) }
+      100%    { left:calc(100% - 86px); transform:translateY(-54%) }
+    }
+    /* Grab / grabbing cursors inside .wa (real macOS cursors) */
+    .wa-cursor { position:absolute; bottom:10px; left:50%; transform:translateX(-50%); z-index:10; pointer-events:none; width:28px; height:28px; }
+    .wa-grab, .wa-grabbing { position:absolute; top:0; left:50%; transform:translateX(-50%); width:28px; height:28px; object-fit:contain; filter:drop-shadow(0 1px 3px rgba(0,0,0,.25)); }
+    .wa-grab { opacity:0; animation:waGrab 10s ease-in-out infinite; }
+    .wa-grabbing { opacity:0; animation:waGrabbing 10s ease-in-out infinite; }
+    @keyframes waGrab {
+      0%,12%{opacity:0} 14%,20%{opacity:1} 22%{opacity:0}
+      34%{opacity:0} 37%,41%{opacity:1} 43%{opacity:0}
+      46%{opacity:0} 48%,52%{opacity:1} 54%{opacity:0}
+      66%{opacity:0} 69%,73%{opacity:1} 75%{opacity:0}
+      100%{opacity:0}
+    }
+    @keyframes waGrabbing {
+      0%,21%{opacity:0} 23%,35%{opacity:1} 37%{opacity:0}
+      53%{opacity:0} 55%,67%{opacity:1} 69%{opacity:0}
+      100%{opacity:0}
+    }
+    /* Page edge indicators */
+    .wa-edge { position:absolute; top:8%; bottom:8%; width:2px; opacity:0; }
+    .wa-edge-l { left:0; background:#6366f1; box-shadow:0 0 6px rgba(99,102,241,.5), 0 0 12px rgba(99,102,241,.2); border-radius:1px; animation:waEdgeL 10s ease infinite; }
+    .wa-edge-r { right:0; background:#6366f1; box-shadow:0 0 6px rgba(99,102,241,.5), 0 0 12px rgba(99,102,241,.2); border-radius:1px; animation:waEdgeR 10s ease infinite; }
+    @keyframes waEdgeR { 0%,18%{opacity:.7} 22%{opacity:0} 66%{opacity:0} 70%,100%{opacity:.7} }
+    @keyframes waEdgeL { 0%,34%{opacity:0} 38%{opacity:.7} 50%{opacity:.7} 54%{opacity:0} 100%{opacity:0} }
+    .wa-grip { display:grid; grid-template-columns:repeat(3,1fr); gap:3px 5px; padding:3px 12px; animation:gripPulse 10s ease infinite; }
+    .wa-grip i { width:4px; height:4px; border-radius:50%; background:#c4b5fd; display:block; }
+    @keyframes gripPulse { 0%,5%{opacity:.6} 16%,70%{opacity:1} 74%,100%{opacity:.6} }
     .wa-btn { border-radius:50%; display:flex; align-items:center; justify-content:center; }
     .wa-del { width:28px; height:28px; background:rgba(225,29,72,.1); }
     .wa-add { width:28px; height:28px; background:rgba(124,58,237,.1); }
@@ -315,7 +357,7 @@
     .wa-c0{animation:waC0 8s both infinite}.wa-c1{animation:waC1 8s both infinite;opacity:0}.wa-c2{animation:waC2 8s both infinite;opacity:0}.wa-c3{animation:waC3 8s both infinite;opacity:0}
     @keyframes waC0{0%,62%{opacity:1}65%{opacity:0}95%{opacity:0}100%{opacity:1}}@keyframes waC1{0%,62%{opacity:0}65%,72%{opacity:1}75%{opacity:0}}@keyframes waC2{0%,72%{opacity:0}75%,82%{opacity:1}85%{opacity:0}}@keyframes waC3{0%,82%{opacity:0}85%,95%{opacity:1}100%{opacity:0}}
     .wa-y0{animation:waY0 8s both infinite}.wa-y1{animation:waY1 8s both infinite;opacity:0}
-    @keyframes waY0{0%,87%{opacity:1}90%{opacity:0}95%{opacity:0}100%{opacity:1}}@keyframes waY1{0%,87%{opacity:0}90%,95%{opacity:1}100%{opacity:0}}
+    @keyframes waY0{0%,54%{opacity:1}55%{opacity:0}95%{opacity:0}100%{opacity:1}}@keyframes waY1{0%,54%{opacity:0}55%,95%{opacity:1}100%{opacity:0}}
 
     /* -- Crosshair demo (card 2) -- */
     .xh-demo { position:relative; width:260px; height:160px; background:rgba(255,255,255,.4); border-radius:12px; }
@@ -329,7 +371,9 @@
     @keyframes xhPop { 0%,8%{opacity:0;transform:scale(0)} 12%,72%{opacity:1;transform:scale(1)} 78%,100%{opacity:0;transform:scale(0)} }
     @keyframes xhRing { 0%,12%{opacity:0;transform:scale(1)} 16%{opacity:.5;transform:scale(1)} 26%{opacity:0;transform:scale(4)} 100%{opacity:0} }
 
-    /* -- Popup (card 3, static image) -- */
+    /* -- Popup (card 3, reveal on scroll) -- */
+    .popup-reveal .showcase-img { opacity:0; transform:translateY(-24px) scale(.97); transition:opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+    .popup-reveal.is-visible .showcase-img { opacity:1; transform:translateY(0) scale(1); }
 
     /* -- Humanize timeline (card 4) -- */
     .hz-dot { width:10px; height:10px; border-radius:50%; position:absolute; opacity:0; }
@@ -399,6 +443,19 @@
     .viz-iframe .click-dot { position:absolute; top:50%; left:50%; width:14px; height:14px; margin:-7px 0 0 -7px; border-radius:50%; background:rgba(124,58,237,.2); border:2px solid #7c3aed; animation:dotPop 1s ease-in-out infinite alternate; }
     @keyframes dotPop { from{transform:scale(1)} to{transform:scale(1.5);background:rgba(124,58,237,.35)} }
 
+    /* -- Lightweight viz (card 12) -- */
+    .viz-light { display:flex; flex-direction:column; align-items:center; gap:12px; width:100%; }
+    .viz-light-icon { width:56px; height:56px; border-radius:50%; background:rgba(22,163,74,.1); display:flex; align-items:center; justify-content:center; animation:lightPulse 3s ease-in-out infinite; }
+    @keyframes lightPulse { 0%,100%{box-shadow:0 0 0 0 rgba(22,163,74,.15)} 50%{box-shadow:0 0 0 12px rgba(22,163,74,0)} }
+    .viz-light-stats { width:100%; display:flex; flex-direction:column; gap:6px; }
+    .viz-light-row { display:flex; align-items:center; justify-content:space-between; }
+    .viz-light-label { font-size:11px; font-weight:600; color:#6b7280; }
+    .viz-light-val { font-size:12px; font-weight:700; color:#16a34a; }
+    .viz-light-bar { flex:0 0 100px; height:6px; background:#e5e7eb; border-radius:3px; overflow:hidden; display:block; }
+    .viz-light-bar span { display:block; height:100%; width:8%; background:linear-gradient(90deg,#22c55e,#16a34a); border-radius:3px; animation:barTiny 4s ease-in-out infinite; }
+    @keyframes barTiny { 0%,100%{width:6%} 50%{width:12%} }
+    .viz-light-tag { font-size:10px; font-weight:700; color:#16a34a; background:rgba(22,163,74,.08); padding:3px 12px; border-radius:10px; letter-spacing:.3px; }
+
     /* -- Badge viz (card 11) -- */
     .viz-badges { display:flex; gap:8px; flex-direction:column; }
     .viz-badge { display:flex; align-items:center; gap:8px; background:#fff; border-radius:10px; padding:8px 14px; box-shadow:0 2px 8px rgba(0,0,0,.06); border:1px solid #f3f4f6; font-size:12px; font-weight:600; color:#5f6368; }
@@ -439,7 +496,7 @@
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
       INSTALLED &amp; READY
     </div>
-    <h1>Speed Auto Clicker <span class="accent">v3.0</span></h1>
+    <h1><img src="icon128.png" width="42" height="42" alt=""> Speed Auto Clicker <span class="accent">v3.0</span></h1>
     <p class="hero-sub">Your clicks, automated. Place targets anywhere on the page,<br>hit play, and let the clicker do the rest.</p>
     <div class="hero-pills">
       <span class="hero-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2"><circle cx="12" cy="12" r="2"/><line x1="12" y1="2" x2="12" y2="8"/><line x1="12" y1="16" x2="12" y2="22"/><line x1="2" y1="12" x2="8" y2="12"/><line x1="16" y1="12" x2="22" y2="12"/></svg> Multi-Point</span>
@@ -616,7 +673,11 @@
 
   <!-- Scroll hint -->
   <div class="scroll-hint">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c4c8cc" stroke-width="2" stroke-linecap="round"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
+    <span class="scroll-hint-label">Explore 12 features below</span>
+    <span class="scroll-hint-sub">Scroll down to see what you can do</span>
+    <div class="scroll-hint-arrow">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.5" stroke-linecap="round"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
+    </div>
   </div>
 
   <!-- ==================== FEATURE SHOWCASE ==================== -->
@@ -626,22 +687,32 @@
 
     <div class="showcase">
       <div class="showcase-vis" style="background:linear-gradient(135deg,#ecfeff,#e0f2fe)">
-        <div class="wa">
-          <div class="wa-grip">&middot;&middot;&middot; &middot;&middot;&middot;</div>
-          <div class="wa-btn wa-del"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg></div>
-          <div class="wa-row">
-            <span>PTS</span><span>CYC</span><span>CLK</span>
-            <span class="v"><span class="wa-p0">0</span><span class="wa-p1">1</span><span class="wa-p2">2</span><span class="wa-p3">3</span><i style="visibility:hidden">0</i></span>
-            <span class="v"><span class="wa-y0">0</span><span class="wa-y1">1</span><i style="visibility:hidden">0</i></span>
-            <span class="v"><span class="wa-c0">0</span><span class="wa-c1">1</span><span class="wa-c2">2</span><span class="wa-c3">3</span><i style="visibility:hidden">0</i></span>
+        <div class="wa-scene">
+          <div class="wa">
+            <div class="wa-grip"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="wa-btn wa-del"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg></div>
+            <div class="wa-row">
+              <span>PTS</span><span>CYC</span><span>CLK</span>
+              <span class="v"><span class="wa-p0">0</span><span class="wa-p1">1</span><span class="wa-p2">2</span><span class="wa-p3">3</span><i style="visibility:hidden">0</i></span>
+              <span class="v"><span class="wa-y0">0</span><span class="wa-y1">1</span><i style="visibility:hidden">0</i></span>
+              <span class="v"><span class="wa-c0">0</span><span class="wa-c1">1</span><span class="wa-c2">2</span><span class="wa-c3">3</span><i style="visibility:hidden">0</i></span>
+            </div>
+            <div class="wa-btn wa-play">
+              <svg class="wa-play-i" width="18" height="18" viewBox="0 0 24 24" fill="#fff"><polygon points="6 3 20 12 6 21"/></svg>
+              <svg class="wa-pause-i" width="18" height="18" viewBox="0 0 24 24" fill="#fff"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg>
+            </div>
+            <div class="wa-int"><i>&lsaquo;</i> 1.0 <i>&rsaquo;</i></div>
+            <div class="wa-btn wa-add"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="2"/><line x1="12" y1="2" x2="12" y2="8"/><line x1="12" y1="16" x2="12" y2="22"/><line x1="2" y1="12" x2="8" y2="12"/><line x1="16" y1="12" x2="22" y2="12"/></svg></div>
+            <div class="wa-grip"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <!-- Grab/grabbing cursor (macOS native) -->
+            <div class="wa-cursor">
+              <img class="wa-grab" width="28" height="28" src="data:image/png;base64,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" alt="">
+              <img class="wa-grabbing" width="28" height="28" src="data:image/png;base64,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" alt="">
+            </div>
           </div>
-          <div class="wa-btn wa-play">
-            <svg class="wa-play-i" width="18" height="18" viewBox="0 0 24 24" fill="#fff"><polygon points="6 3 20 12 6 21"/></svg>
-            <svg class="wa-pause-i" width="18" height="18" viewBox="0 0 24 24" fill="#fff"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg>
-          </div>
-          <div class="wa-int"><i>&lsaquo;</i> 1.0 <i>&rsaquo;</i></div>
-          <div class="wa-btn wa-add"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="2"/><line x1="12" y1="2" x2="12" y2="8"/><line x1="12" y1="16" x2="12" y2="22"/><line x1="2" y1="12" x2="8" y2="12"/><line x1="16" y1="12" x2="22" y2="12"/></svg></div>
-          <div class="wa-grip">&middot;&middot;&middot; &middot;&middot;&middot;</div>
+          <!-- Page edges -->
+          <div class="wa-edge wa-edge-l"></div>
+          <div class="wa-edge wa-edge-r"></div>
         </div>
       </div>
       <div class="showcase-body">
@@ -670,7 +741,7 @@
       </div>
     </div>
 
-    <div class="showcase">
+    <div class="showcase popup-reveal">
       <div class="showcase-img">
         <img src="popup-demo.png" alt="Popup Control Center">
       </div>
@@ -850,6 +921,27 @@
         <div class="showcase-desc">See the clicker's state without opening anything. A cyan dot on the extension icon means it's running, amber means paused. When adding targets, a violet count shows how many you've placed so far.</div>
       </div>
     </div>
+
+    <div class="showcase rev">
+      <div class="showcase-vis" style="background:linear-gradient(135deg,#f0fdf4,#ecfccb)">
+        <div class="viz-light">
+          <div class="viz-light-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div class="viz-light-stats">
+            <div class="viz-light-row"><span class="viz-light-label">Size</span><span class="viz-light-val">&lt; 50 KB</span></div>
+            <div class="viz-light-row"><span class="viz-light-label">CPU</span><span class="viz-light-val viz-light-bar"><span></span></span></div>
+            <div class="viz-light-row"><span class="viz-light-label">Memory</span><span class="viz-light-val viz-light-bar"><span></span></span></div>
+          </div>
+          <div class="viz-light-tag">0% idle impact</div>
+        </div>
+      </div>
+      <div class="showcase-body">
+        <div class="showcase-label" style="color:#16a34a">ZERO OVERHEAD</div>
+        <div class="showcase-title">Lightweight &amp; Fast</div>
+        <div class="showcase-desc">Under 50 KB total. No background processes when idle, no performance impact on your browsing. Activates only when you tell it to — then gets out of the way.</div>
+      </div>
+    </div>
   </div>
 
   <!-- ==================== CTA ==================== -->
@@ -907,6 +999,18 @@
   });
 
   startLoop();
+
+  // Popup card reveal on scroll
+  var revealEl = document.querySelector('.popup-reveal');
+  if (revealEl) {
+    var obs = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) {
+        revealEl.classList.add('is-visible');
+        obs.disconnect();
+      }
+    }, { threshold: 0.3 });
+    obs.observe(revealEl);
+  }
 })();
 </script>
 </body>

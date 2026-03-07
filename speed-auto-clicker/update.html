@@ -10,208 +10,641 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <script defer src="https://cloud.umami.is/script.js" data-website-id="4e1191f7-4c58-449f-82f1-370c4249376d"></script>
   <style>
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    body { min-height:100vh; background:#fff; color:#060607; font-family:'Roboto',sans-serif; font-size:16px; line-height:1.5; -webkit-font-smoothing:antialiased; }
+    .wrap { max-width:960px; margin:0 auto; padding:48px 40px 64px; }
+
+    /* ===== HERO ===== */
+    .hero { text-align:center; padding:24px 0 48px; }
+    h1 img { vertical-align:-8px; margin-right:6px; }
+    .hero-badge { display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,#06b6d4,#6366f1); color:#fff; font-size:13px; font-weight:700; letter-spacing:.5px; padding:6px 16px; border-radius:20px; margin-bottom:20px; }
+    .hero-badge svg { flex-shrink:0; }
+    h1 { font-size:44px; font-weight:700; margin-bottom:12px; letter-spacing:-.5px; }
+    h1 .accent { background:linear-gradient(135deg,#06b6d4,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    h2 { font-size:26px; font-weight:700; margin-bottom:24px; }
+    .hero-sub { font-size:18px; color:#6b7280; margin-bottom:12px; line-height:1.6; }
+    .hero-pills { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-top:20px; }
+    .hero-pill { display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border-radius:20px; font-size:13px; font-weight:500; color:#374151; background:#f9fafb; border:1px solid #e5e7eb; }
+    .hero-pill svg { flex-shrink:0; }
+    .hero-pill .new { font-size:10px; font-weight:700; color:#06b6d4; background:rgba(6,182,212,.1); padding:1px 6px; border-radius:8px; letter-spacing:.3px; }
+
+    /* ===== SECTION ===== */
+    .sec { margin-bottom:56px; }
+    .sec-head { display:flex; gap:14px; align-items:center; margin-bottom:14px; }
+    .sec-ico { flex-shrink:0; width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; }
+    .sec-ico.cy { background:rgba(6,182,212,.1); }
+    .sec-title { font-size:22px; font-weight:700; }
+    .sec-desc { font-size:16px; color:#6b7280; line-height:1.7; margin-bottom:20px; }
+
+    /* ===== SHOWCASE CARDS ===== */
+    .showcase { display:flex; gap:32px; align-items:center; padding:48px 0; border-bottom:1px solid #f3f4f6; }
+    .showcase:last-child { border-bottom:none; }
+    .showcase.rev { flex-direction:row-reverse; }
+    .showcase-body { flex:1; }
+    .showcase-label { font-size:12px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; margin-bottom:8px; }
+    .showcase-label.cy { color:#06b6d4; } .showcase-label.vi { color:#7c3aed; } .showcase-label.am { color:#f59e0b; }
+    .showcase-title { font-size:22px; font-weight:700; margin-bottom:10px; }
+    .showcase-desc { font-size:15px; color:#6b7280; line-height:1.7; }
+
+    /* ===== SHOWCASE VISUALS ===== */
+    .showcase-vis { flex-shrink:0; width:320px; height:220px; border-radius:16px; padding:28px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; box-shadow:0 8px 32px rgba(0,0,0,.08); overflow:hidden; }
+    .showcase-img { flex-shrink:0; width:280px; border-radius:16px; overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,.1); }
+    .showcase-img img { width:100%; display:block; }
+
+    /* -- Widget demo -- */
+    .wa { width:80px; padding:8px; background:rgba(255,255,255,.92); backdrop-filter:blur(14px); border-radius:32px; box-shadow:0 4px 24px rgba(0,0,0,.12),inset 0 0 0 1px rgba(255,255,255,.5); display:flex; flex-direction:column; align-items:center; gap:5px; }
+    .wa-grip { font-size:9px; color:#c4b5fd; letter-spacing:2px; line-height:1; padding:2px 0; }
+    .wa-btn { border-radius:50%; display:flex; align-items:center; justify-content:center; }
+    .wa-del { width:28px; height:28px; background:rgba(225,29,72,.1); }
+    .wa-add { width:28px; height:28px; background:rgba(124,58,237,.1); }
+    .wa-play { width:42px; height:42px; position:relative; animation:waColor 8s ease infinite; }
+    .wa-play svg { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
+    .wa-play-i { animation:waPlayI 8s both infinite; }
+    .wa-pause-i { opacity:0; animation:waPauseI 8s both infinite; }
+    .wa-row { display:grid; grid-template-columns:repeat(3,1fr); text-align:center; font-size:8px; color:#94a3b8; font-weight:600; letter-spacing:.3px; width:100%; padding:2px 4px; }
+    .wa-row .v { font-size:13px; color:#475569; font-weight:700; position:relative; height:18px; }
+    .wa-row .v span { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
+    .wa-int { display:flex; align-items:center; gap:2px; font-size:11px; color:#64748b; font-weight:700; font-family:'SF Mono',Monaco,monospace; }
+    .wa-int i { font-size:14px; color:#94a3b8; font-style:normal; }
+    @keyframes waColor { 0%,52%{background:#06b6d4;box-shadow:0 2px 10px rgba(6,182,212,.3)} 57%,88%{background:#e11d48;box-shadow:0 2px 14px rgba(225,29,72,.4)} 93%,100%{background:#06b6d4;box-shadow:0 2px 10px rgba(6,182,212,.3)} }
+    @keyframes waPlayI { 0%,52%{opacity:1} 55%{opacity:0} 90%{opacity:0} 93%{opacity:1} }
+    @keyframes waPauseI { 0%,52%{opacity:0} 55%{opacity:1} 90%{opacity:1} 93%{opacity:0} }
+    .wa-p0{animation:waP0 8s both infinite}.wa-p1{animation:waP1 8s both infinite;opacity:0}.wa-p2{animation:waP2 8s both infinite;opacity:0}.wa-p3{animation:waP3 8s both infinite;opacity:0}
+    @keyframes waP0{0%,14%{opacity:1}17%{opacity:0}95%{opacity:0}100%{opacity:1}}@keyframes waP1{0%,14%{opacity:0}17%,27%{opacity:1}30%{opacity:0}}@keyframes waP2{0%,27%{opacity:0}30%,40%{opacity:1}43%{opacity:0}}@keyframes waP3{0%,40%{opacity:0}43%,95%{opacity:1}100%{opacity:0}}
+    .wa-c0{animation:waC0 8s both infinite}.wa-c1{animation:waC1 8s both infinite;opacity:0}.wa-c2{animation:waC2 8s both infinite;opacity:0}.wa-c3{animation:waC3 8s both infinite;opacity:0}
+    @keyframes waC0{0%,62%{opacity:1}65%{opacity:0}95%{opacity:0}100%{opacity:1}}@keyframes waC1{0%,62%{opacity:0}65%,72%{opacity:1}75%{opacity:0}}@keyframes waC2{0%,72%{opacity:0}75%,82%{opacity:1}85%{opacity:0}}@keyframes waC3{0%,82%{opacity:0}85%,95%{opacity:1}100%{opacity:0}}
+    .wa-y0{animation:waY0 8s both infinite}.wa-y1{animation:waY1 8s both infinite;opacity:0}
+    @keyframes waY0{0%,87%{opacity:1}90%{opacity:0}95%{opacity:0}100%{opacity:1}}@keyframes waY1{0%,87%{opacity:0}90%,95%{opacity:1}100%{opacity:0}}
+
+    /* -- Crosshair demo -- */
+    .xh-demo { position:relative; width:260px; height:160px; background:rgba(255,255,255,.4); border-radius:12px; }
+    .xh-demo .ln { position:absolute; left:12px; right:12px; height:6px; background:rgba(0,0,0,.04); border-radius:3px; }
+    .xh { position:absolute; width:28px; height:28px; margin:-14px 0 0 -14px; }
+    .xh1 { top:28%; left:25%; } .xh2 { top:58%; left:62%; } .xh3 { top:80%; left:38%; }
+    .xh svg { width:28px; height:28px; opacity:0; animation:xhPop 7s ease both infinite; }
+    .xh2 svg { animation-delay:1.8s; } .xh3 svg { animation-delay:3.6s; }
+    .xh::after { content:''; position:absolute; top:50%;left:50%; width:10px;height:10px; margin:-5px 0 0 -5px; border-radius:50%; border:2px solid #7c3aed; opacity:0; animation:xhRing 7s ease both infinite; }
+    .xh2::after { animation-delay:1.8s; } .xh3::after { animation-delay:3.6s; }
+    @keyframes xhPop { 0%,8%{opacity:0;transform:scale(0)} 12%,72%{opacity:1;transform:scale(1)} 78%,100%{opacity:0;transform:scale(0)} }
+    @keyframes xhRing { 0%,12%{opacity:0;transform:scale(1)} 16%{opacity:.5;transform:scale(1)} 26%{opacity:0;transform:scale(4)} 100%{opacity:0} }
+
+    /* -- Humanize timeline -- */
+    .hz-dot { width:10px; height:10px; border-radius:50%; position:absolute; opacity:0; }
+    .hz-dot.cy { background:#06b6d4; } .hz-dot.am { background:#f59e0b; }
+    .hz-row { position:relative; height:20px; }
+    .hz-line { position:absolute; top:50%; left:0; right:0; height:2px; background:#e5e7eb; transform:translateY(-50%); }
+    .hz-dot.r1{animation:hzDot 6s 0s ease both infinite}.hz-dot.r2{animation:hzDot 6s .8s ease both infinite}.hz-dot.r3{animation:hzDot 6s 1.6s ease both infinite}.hz-dot.r4{animation:hzDot 6s 2.4s ease both infinite}.hz-dot.r5{animation:hzDot 6s 3.2s ease both infinite}
+    .hz-dot.h1{animation:hzDot 6s 0s ease both infinite}.hz-dot.h2{animation:hzDot 6s .5s ease both infinite}.hz-dot.h3{animation:hzDot 6s 1.6s ease both infinite}.hz-dot.h4{animation:hzDot 6s 2.0s ease both infinite}.hz-dot.h5{animation:hzDot 6s 3.3s ease both infinite}
+    @keyframes hzDot { 0%,5%{opacity:0;transform:scale(0)} 10%{opacity:1;transform:scale(1.3)} 15%,70%{opacity:1;transform:scale(1)} 80%,100%{opacity:0;transform:scale(0)} }
+
+    /* -- Per-Site viz -- */
+    .viz-sites { display:flex; gap:10px; }
+    .viz-site { background:#fff; border-radius:10px; padding:10px 14px; box-shadow:0 2px 8px rgba(0,0,0,.06); border:1px solid #f3f4f6; display:flex; flex-direction:column; gap:4px; font-size:11px; }
+    .viz-site .url { font-weight:700; color:#374151; display:flex; align-items:center; gap:5px; }
+    .viz-site .url .dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+    .viz-site .val { color:#9ca3af; font-size:10px; }
+    .viz-site .val b { color:#475569; }
+    .viz-sites .viz-site:first-child { animation:siteFloat 4s ease-in-out infinite; }
+    .viz-sites .viz-site:last-child { animation:siteFloat 4s 2s ease-in-out infinite; }
+    @keyframes siteFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px);box-shadow:0 6px 20px rgba(0,0,0,.1)} }
+
+    /* -- Pause viz -- */
+    .viz-pause { display:flex; align-items:center; gap:16px; }
+    .viz-pause .state { display:flex; flex-direction:column; align-items:center; gap:6px; }
+    .viz-pause .ico { width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+    .viz-pause .ico.play { background:rgba(6,182,212,.12); }
+    .viz-pause .ico.pau { background:rgba(245,158,11,.12); }
+    .viz-pause .pill { padding:5px 14px; border-radius:12px; font-size:11px; font-weight:700; letter-spacing:.3px; }
+    .viz-pause .pill.run { background:rgba(6,182,212,.12); color:#0891b2; }
+    .viz-pause .pill.pau { background:rgba(245,158,11,.12); color:#d97706; }
+    .viz-pause .state:first-child { animation:pzA 4s ease-in-out infinite; }
+    .viz-pause .state:last-child { animation:pzB 4s ease-in-out infinite; }
+    @keyframes pzA { 0%,40%{opacity:1;transform:scale(1)} 50%,90%{opacity:.3;transform:scale(.92)} 100%{opacity:1;transform:scale(1)} }
+    @keyframes pzB { 0%,40%{opacity:.3;transform:scale(.92)} 50%,90%{opacity:1;transform:scale(1)} 100%{opacity:.3;transform:scale(.92)} }
+
+    /* ===== BROWSER FRAME ===== */
+    .brow { position:relative; border-radius:12px; border:1px solid #d1d5db; box-shadow:0 4px 24px rgba(0,0,0,.07); overflow:hidden; cursor:pointer; }
+    .brow-pause { position:absolute; bottom:12px; left:50%; transform:translateX(-50%); z-index:60; display:flex; align-items:center; gap:6px; padding:5px 14px; background:rgba(0,0,0,.55); border-radius:20px; opacity:0; pointer-events:none; transition:opacity .25s; }
+    .brow.anim-paused .brow-pause { opacity:1; }
+    .brow-tabs { display:flex; align-items:flex-end; background:#dee1e6; padding:6px 8px 0; gap:2px; }
+    .brow-tab { background:#f1f3f4; border-radius:8px 8px 0 0; padding:5px 14px; font-size:12px; color:#5f6368; display:flex; align-items:center; gap:8px; }
+    .brow-tab-x { font-size:15px; color:#9ca3af; }
+    .brow-tab-new { color:#9ca3af; font-size:18px; padding:5px 10px; }
+    .brow-bar { display:flex; align-items:center; gap:4px; padding:4px 8px; background:#f1f3f4; border-bottom:1px solid #dadce0; }
+    .brow-nav { display:flex; gap:2px; }
+    .brow-nav svg { opacity:.5; }
+    .brow-url { flex:1; background:#fff; border-radius:20px; padding:5px 14px; font-size:12px; color:#5f6368; border:1px solid #dadce0; }
+    .brow-icons { display:flex; align-items:center; gap:2px; }
+    .brow-ic { width:28px; height:28px; display:flex; align-items:center; justify-content:center; border-radius:50%; position:relative; flex-shrink:0; }
+    .brow-body { position:relative; background:#fff; overflow:hidden; }
+
+    .fake { padding:28px 36px; }
+    .fk { height:10px; background:#e5e7eb; border-radius:5px; margin-bottom:10px; }
+    .fk.hd { height:14px; width:50%; background:#d1d5db; margin-bottom:16px; }
+    .fk.w90{width:88%} .fk.w80{width:78%} .fk.w70{width:68%} .fk.w60{width:58%} .fk.w50{width:48%}
+    .fk-img { width:55%; height:70px; background:linear-gradient(135deg,#e0e7ff,#dbeafe); border-radius:8px; margin:16px 0; }
+    .fake.dim { opacity:.3; }
+
+    .ext-drop { position:absolute; top:0; right:28px; width:280px; z-index:10; background:#fff; border-radius:0 0 10px 10px; box-shadow:0 8px 30px rgba(0,0,0,.14); border:1px solid #dadce0; border-top:none; opacity:0; transform:translateY(-8px); }
+    .ext-h { padding:14px 16px 4px; display:flex; justify-content:space-between; align-items:center; }
+    .ext-h b { font-size:14px; font-weight:500; color:#202124; }
+    .ext-h span { font-size:18px; color:#5f6368; }
+    .ext-sub { padding:2px 16px 10px; font-size:11px; color:#80868b; line-height:1.4; }
+    .ext-sep { height:1px; background:#e5e7eb; }
+    .ext-row { display:flex; align-items:center; gap:10px; padding:10px 16px; }
+    .ext-row-name { flex:1; font-size:13px; color:#202124; }
+    .ext-row-pin { width:24px; height:24px; display:flex; align-items:center; justify-content:center; position:relative; }
+    .ext-manage { display:flex; align-items:center; gap:10px; padding:10px 16px; font-size:13px; color:#5f6368; }
+
+    .popup-over { position:absolute; top:72px; right:20px; width:190px; z-index:12; background:#fff; border-radius:12px; box-shadow:0 8px 32px rgba(0,0,0,.18); border:1px solid #e5e7eb; padding:14px; opacity:0; transform:translateY(-8px) scale(.96); }
+    .po-head { display:flex; align-items:center; gap:8px; margin-bottom:12px; font-size:12px; font-weight:700; color:#1e293b; }
+    .po-row { display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:10px; font-size:11px; color:#64748b; }
+    .po-val { font-size:16px; font-weight:700; color:#1e293b; font-family:'SF Mono',Monaco,monospace; }
+    .po-pm { width:22px; height:22px; border-radius:6px; background:#f1f5f9; display:flex; align-items:center; justify-content:center; font-size:14px; color:#94a3b8; font-weight:700; }
+    .po-btn { display:flex; align-items:center; justify-content:center; gap:6px; padding:8px; border-radius:8px; font-size:12px; font-weight:600; cursor:default; margin-bottom:6px; }
+    .po-add { background:rgba(124,58,237,.08); color:#7c3aed; }
+    .po-play { background:rgba(6,182,212,.08); color:#06b6d4; margin-bottom:0; }
+
+    .ptr { position:absolute; z-index:50; pointer-events:none; filter:drop-shadow(0 2px 4px rgba(0,0,0,.3)); opacity:0; }
+    .hl { position:absolute; width:44px; height:44px; margin:-22px 0 0 -22px; border-radius:50%; border:3px solid #0891b2; z-index:40; pointer-events:none; opacity:0; }
+    @keyframes hlPulse { 0%{opacity:0;transform:scale(.5)} 12%{opacity:1;transform:scale(1)} 30%{box-shadow:0 0 0 6px rgba(8,145,178,.25)} 45%{box-shadow:0 0 0 0 rgba(8,145,178,0)} 60%{box-shadow:0 0 0 6px rgba(8,145,178,.25)} 75%{box-shadow:0 0 0 0 rgba(8,145,178,0)} 90%{opacity:1} 100%{opacity:0} }
+    .click-ring { position:absolute; width:28px; height:28px; margin:-14px 0 0 -14px; border-radius:50%; background:rgba(6,182,212,.18); border:2px solid rgba(6,182,212,.45); z-index:45; pointer-events:none; opacity:0; }
+    @keyframes clickRing { 0%{transform:scale(.3);opacity:0} 5%{transform:scale(.4);opacity:1} 100%{transform:scale(2.5);opacity:0} }
+    .pin-b { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); opacity:0; }
+    @keyframes pinOn { to{opacity:1} }
+    .sac-tb { position:absolute; width:40px; height:40px; top:43px; right:93px; z-index:5; border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(99,102,241,.08); transform:scale(0); }
+    .sac-tb::after { content:''; position:absolute; inset:-4px; border-radius:50%; border:2px solid rgba(99,102,241,.3); opacity:0; }
+    @keyframes sacPop { from{transform:scale(0)} to{transform:scale(1)} }
+    @keyframes sacGlow { 0%,100%{transform:scale(1);opacity:0} 50%{transform:scale(1.4);opacity:1} }
+
+    .wm { position:absolute; right:16px; top:50%; transform:translateY(-50%); width:80px; padding:8px; background:rgba(255,255,255,.88); backdrop-filter:blur(14px); border-radius:32px; box-shadow:0 4px 24px rgba(0,0,0,.12),inset 0 0 0 1px rgba(255,255,255,.5); display:flex; flex-direction:column; align-items:center; gap:5px; opacity:0; }
+    .wm-grip { font-size:9px; color:#c4b5fd; letter-spacing:2px; line-height:1; padding:2px 0; user-select:none; }
+    .wm-btn { border-radius:50%; display:flex; align-items:center; justify-content:center; }
+    .wm-del { width:32px; height:32px; background:rgba(225,29,72,.10); }
+    .wm-stats { display:grid; grid-template-columns:repeat(3,1fr); text-align:center; font-size:8px; color:#94a3b8; font-weight:600; letter-spacing:.3px; line-height:1.4; width:100%; padding:2px 4px; }
+    .wm-stats .val { font-size:13px; color:#475569; font-weight:700; }
+    .wm-play { width:42px; height:42px; background:#06b6d4; box-shadow:0 2px 10px rgba(6,182,212,.35); position:relative; }
+    .wm-play svg { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
+    .wm-pause-ico { opacity:0; }
+    .wm-int { display:flex; align-items:center; gap:2px; font-size:11px; color:#64748b; font-weight:700; font-family:'SF Mono',Monaco,monospace; }
+    .wm-int span { font-size:14px; color:#94a3b8; }
+    .wm-add { width:32px; height:32px; background:rgba(124,58,237,.10); }
+
+    .target { position:absolute; width:36px; height:36px; margin:-18px 0 0 -18px; }
+    .target svg { width:36px; height:36px; opacity:0; }
+    @keyframes xPop { from{opacity:0;transform:scale(0)} to{opacity:1;transform:scale(1)} }
+    .target::after { content:''; position:absolute; top:50%;left:50%; width:12px;height:12px; margin:-6px 0 0 -6px; border-radius:50%; border:2px solid #7c3aed; opacity:0; pointer-events:none; }
+    @keyframes ripple { 0%{transform:scale(1);opacity:.55} 33%{transform:scale(4);opacity:0} 100%{transform:scale(1);opacity:0} }
+    .target::before { content:''; position:absolute; top:50%;left:50%; width:12px;height:12px; margin:-6px 0 0 -6px; border-radius:50%; background:rgba(124,58,237,.12); opacity:0; pointer-events:none; }
+    @keyframes rippleFill { 0%{transform:scale(1);opacity:.3} 33%{transform:scale(3);opacity:0} 100%{transform:scale(1);opacity:0} }
+
+    .pts-wrap, .cyc-wrap, .clk-wrap { position:relative; }
+    .pts-n, .cyc-n, .clk-n { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:0; }
+    .pts-n.pts0, .cyc-n.cyc0, .clk-n.clk0 { opacity:1; }
+
+    /* ===== ANIMATION (20s) ===== */
+    .anim-active .ptr { animation: ptrPath 20s ease-in-out both; }
+    @keyframes ptrPath {
+      0%   { top:300px; left:40%; opacity:0; transform:scale(1) }
+      2%   { top:300px; left:40%; opacity:1; transform:scale(1) }
+      12%  { top:61px; left:calc(100% - 85px); opacity:1; transform:scale(1) }
+      13%  { top:61px; left:calc(100% - 85px); opacity:1; transform:scale(.85) }
+      14%  { top:61px; left:calc(100% - 85px); opacity:1; transform:scale(1) }
+      16%  { top:61px; left:calc(100% - 85px); opacity:1; transform:scale(1) }
+      26%  { top:201px; left:calc(100% - 60px); opacity:1; transform:scale(1) }
+      27%  { top:201px; left:calc(100% - 60px); opacity:1; transform:scale(.85) }
+      28%  { top:201px; left:calc(100% - 60px); opacity:1; transform:scale(1) }
+      32%  { top:201px; left:calc(100% - 60px); opacity:1; transform:scale(1) }
+      40%  { top:62px; left:calc(100% - 116px); opacity:1; transform:scale(1) }
+      41%  { top:62px; left:calc(100% - 116px); opacity:1; transform:scale(.85) }
+      42%  { top:62px; left:calc(100% - 116px); opacity:1; transform:scale(1) }
+      43%  { top:62px; left:calc(100% - 116px); opacity:1; transform:scale(1) }
+      48%  { top:163px; left:calc(100% - 118px); opacity:1; transform:scale(1) }
+      49%  { top:163px; left:calc(100% - 118px); opacity:1; transform:scale(.85) }
+      50%  { top:163px; left:calc(100% - 118px); opacity:1; transform:scale(1) }
+      51%  { top:163px; left:calc(100% - 118px); opacity:1; transform:scale(1) }
+      56%  { top:209px; left:22%; opacity:1; transform:scale(1) }
+      57%  { top:209px; left:22%; opacity:1; transform:scale(.85) }
+      58%  { top:209px; left:22%; opacity:1; transform:scale(1) }
+      62%  { top:301px; left:52%; opacity:1; transform:scale(1) }
+      63%  { top:301px; left:52%; opacity:1; transform:scale(.85) }
+      64%  { top:301px; left:52%; opacity:1; transform:scale(1) }
+      68%  { top:381px; left:35%; opacity:1; transform:scale(1) }
+      69%  { top:381px; left:35%; opacity:1; transform:scale(.85) }
+      70%  { top:381px; left:35%; opacity:1; transform:scale(1) }
+      71%  { top:381px; left:35%; opacity:1; transform:scale(1) }
+      75%  { top:287px; left:calc(100% - 59px); opacity:1; transform:scale(1) }
+      76%  { top:287px; left:calc(100% - 59px); opacity:1; transform:scale(.85) }
+      77%  { top:287px; left:calc(100% - 59px); opacity:1; transform:scale(1) }
+      80%  { top:287px; left:calc(100% - 59px); opacity:0; transform:scale(1) }
+      100% { top:287px; left:calc(100% - 59px); opacity:0; transform:scale(1) }
     }
+    .anim-active .hl-puzzle { animation: hlPulse 2.5s 1.2s ease-in-out forwards; }
+    .anim-active .hl-pin    { animation: hlPulse 2.5s 3.8s ease-in-out forwards; }
+    .anim-active .hl-sac    { animation: hlPulse 3s 6.5s ease-in-out forwards; }
+    .anim-active .ext-drop { animation: dropShow 3.5s 2.9s ease-out both; }
+    @keyframes dropShow { 0%{opacity:0;transform:translateY(-8px)} 8%{opacity:1;transform:translateY(0)} 70%{opacity:1;transform:translateY(0)} 100%{opacity:0;transform:translateY(-5px)} }
+    .anim-active .cr-puzzle { animation: clickRing .6s 2.6s ease-out forwards; }
+    .anim-active .cr-pin    { animation: clickRing .6s 5.4s ease-out forwards; }
+    .anim-active .cr-sac    { animation: clickRing .6s 8.2s ease-out forwards; }
+    .anim-active .cr-add    { animation: clickRing .6s 9.8s ease-out forwards; }
+    .anim-active .cr-p1     { animation: clickRing .6s 11.4s ease-out forwards; }
+    .anim-active .cr-p2     { animation: clickRing .6s 12.6s ease-out forwards; }
+    .anim-active .cr-p3     { animation: clickRing .6s 13.8s ease-out forwards; }
+    .anim-active .cr-play   { animation: clickRing .6s 15.2s ease-out forwards; }
+    .anim-active .pin-b { animation: pinOn .3s 5.4s ease-out forwards; }
+    .anim-active .sac-tb       { animation: sacPop .5s 6.5s cubic-bezier(.34,1.56,.64,1) both; }
+    .anim-active .sac-tb::after { animation: sacGlow 1s 7s ease-in-out 3 both; }
+    .anim-active .popup-over { animation: popupShow 2s 8.4s ease-out both; }
+    @keyframes popupShow { 0%{opacity:0;transform:translateY(-8px) scale(.96)} 10%{opacity:1;transform:translateY(0) scale(1)} 75%{opacity:1;transform:translateY(0) scale(1)} 100%{opacity:0;transform:translateY(-5px) scale(.98)} }
+    .anim-active .wm { animation: wmSlide .5s 8.4s ease-out both; }
+    @keyframes wmSlide { from{opacity:0;transform:translateY(-50%) translateX(30px)} to{opacity:1;transform:translateY(-50%) translateX(0)} }
+    .anim-active .target.t1 svg { animation: xPop .35s 11.4s ease-out both; }
+    .anim-active .target.t2 svg { animation: xPop .35s 12.6s ease-out both; }
+    .anim-active .target.t3 svg { animation: xPop .35s 13.8s ease-out both; }
+    .anim-active .pts0 { animation: ptsVis0 20s both; }
+    .anim-active .pts1 { animation: ptsVis1 20s both; }
+    .anim-active .pts2 { animation: ptsVis2 20s both; }
+    .anim-active .pts3 { animation: ptsVis3 20s both; }
+    @keyframes ptsVis0 { 0%,56%{opacity:1} 57%,100%{opacity:0} }
+    @keyframes ptsVis1 { 0%,56%{opacity:0} 57%,62%{opacity:1} 63%,100%{opacity:0} }
+    @keyframes ptsVis2 { 0%,62%{opacity:0} 63%,68%{opacity:1} 69%,100%{opacity:0} }
+    @keyframes ptsVis3 { 0%,68%{opacity:0} 69%,100%{opacity:1} }
+    .anim-active .clk0 { animation: clkVis0 20s both; }
+    .anim-active .clk1 { animation: clkVis1 20s both; }
+    .anim-active .clk2 { animation: clkVis2 20s both; }
+    .anim-active .clk3 { animation: clkVis3 20s both; }
+    @keyframes clkVis0 { 0%,77%{opacity:1} 78%,100%{opacity:0} }
+    @keyframes clkVis1 { 0%,77%{opacity:0} 78%,82%{opacity:1} 83%,100%{opacity:0} }
+    @keyframes clkVis2 { 0%,82%{opacity:0} 83%,87%{opacity:1} 88%,100%{opacity:0} }
+    @keyframes clkVis3 { 0%,87%{opacity:0} 88%,100%{opacity:1} }
+    .anim-active .cyc0 { animation: cycVis0 20s both; }
+    .anim-active .cyc1 { animation: cycVis1 20s both; }
+    @keyframes cycVis0 { 0%,75%{opacity:1} 76%,100%{opacity:0} }
+    @keyframes cycVis1 { 0%,75%{opacity:0} 76%,100%{opacity:1} }
+    .anim-active .wm-play-ico  { animation: icoHide .01s 15.2s both; }
+    .anim-active .wm-pause-ico { animation: icoShow .01s 15.2s both; }
+    @keyframes icoHide { to{opacity:0} }
+    @keyframes icoShow { to{opacity:1} }
+    .anim-active .wm-play { animation: playToStop .4s 15.2s ease-out both, stopGlow 1.5s 15.6s infinite alternate both; }
+    @keyframes playToStop { from{background:#06b6d4} to{background:#e11d48} }
+    @keyframes stopGlow { from{box-shadow:0 2px 10px rgba(225,29,72,.35)} to{box-shadow:0 0 20px rgba(225,29,72,.55),0 0 40px rgba(225,29,72,.15)} }
+    .anim-active .target.t1::after  { animation: ripple 2.1s 15.6s ease-out infinite none; }
+    .anim-active .target.t2::after  { animation: ripple 2.1s 16.6s ease-out infinite none; }
+    .anim-active .target.t3::after  { animation: ripple 2.1s 17.6s ease-out infinite none; }
+    .anim-active .target.t1::before { animation: rippleFill 2.1s 15.6s ease-out infinite none; }
+    .anim-active .target.t2::before { animation: rippleFill 2.1s 16.6s ease-out infinite none; }
+    .anim-active .target.t3::before { animation: rippleFill 2.1s 17.6s ease-out infinite none; }
 
-    body {
-      min-height: 100vh;
-      background: #fff;
-      color: #060607;
-      font-family: 'Roboto', sans-serif;
-      font-size: 16px;
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-    }
+    /* ===== PAUSE STATE ===== */
+    .brow.anim-paused, .brow.anim-paused *, .brow.anim-paused *::before, .brow.anim-paused *::after { animation-play-state:paused !important; }
 
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 48px 40px 64px;
-    }
+    /* ===== CTA + FOOTER ===== */
+    .cta { text-align:center; margin-top:48px; padding:28px 24px; background:#f9fafb; border-radius:12px; border:1px solid #f3f4f6; }
+    .footer { text-align:center; margin-top:32px; font-size:13px; color:#9ca3af; }
+    .footer a { color:#6366f1; text-decoration:none; }
+    .footer a:hover { text-decoration:underline; }
 
-    .badge {
-      display: inline-block;
-      background: #06b6d4;
-      color: #fff;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      padding: 4px 12px;
-      border-radius: 20px;
-      margin-bottom: 16px;
-    }
-
-    h1 {
-      font-size: 36px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .subtitle {
-      font-size: 18px;
-      color: #6b7280;
-      margin-bottom: 40px;
-    }
-
-    .feature {
-      display: flex;
-      gap: 20px;
-      align-items: flex-start;
-      padding: 24px 0;
-      border-bottom: 1px solid #f3f4f6;
-    }
-
-    .feature:last-child {
-      border-bottom: none;
-    }
-
-    .feature-icon {
-      flex-shrink: 0;
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-    }
-
-    .feature-icon.cyan { background: rgba(6, 182, 212, 0.1); }
-    .feature-icon.violet { background: rgba(124, 58, 237, 0.1); }
-    .feature-icon.amber { background: rgba(245, 158, 11, 0.1); }
-    .feature-icon.rose { background: rgba(225, 29, 72, 0.1); }
-
-    .feature-content { flex: 1; }
-
-    .feature-title {
-      font-size: 17px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-
-    .feature-desc {
-      font-size: 14px;
-      color: #6b7280;
-      line-height: 1.5;
-    }
-
-    .cta {
-      text-align: center;
-      margin-top: 40px;
-    }
-
-    .cta-text {
-      font-size: 15px;
-      color: #6b7280;
-      margin-bottom: 16px;
-    }
-
-    .footer {
-      text-align: center;
-      margin-top: 32px;
-      font-size: 13px;
-      color: #9ca3af;
-    }
-
-    .footer a {
-      color: #6366f1;
-      text-decoration: none;
-    }
-
-    .footer a:hover {
-      text-decoration: underline;
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        padding: 32px 20px 48px;
-      }
-
-      h1 {
-        font-size: 28px;
-      }
-
-      .feature {
-        gap: 14px;
-        padding: 18px 0;
-      }
-
-      .feature-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-      }
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:768px){
+      .wrap{padding:32px 20px 48px} h1{font-size:28px} .brow-body{min-height:200px} .fake{padding:20px}
+      .wm{right:8px;width:60px} .ext-drop{right:8px;width:240px} .popup-over{right:8px;width:160px}
+      .ptr,.click-ring,.sac-tb,.hl{display:none}
+      .showcase{flex-direction:column!important;gap:20px} .showcase-vis{width:100%;max-width:320px}
+      .hero-pills{gap:6px}
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <span class="badge">VERSION 3.0</span>
-    <h1>What's New</h1>
-    <p class="subtitle">Speed Auto Clicker just got a major upgrade. Here's what changed.</p>
+<div class="wrap">
 
-    <div class="feature">
-      <div class="feature-icon cyan">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg>
-      </div>
-      <div class="feature-content">
-        <div class="feature-title">Floating Widget</div>
-        <div class="feature-desc">A new draggable control panel on your pages. Start, stop, and add click points without opening the popup. Hover to reveal, drag to reposition.</div>
-      </div>
+  <!-- ==================== HERO ==================== -->
+  <div class="hero">
+    <div class="hero-badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      MAJOR UPDATE
     </div>
-
-    <div class="feature">
-      <div class="feature-icon violet">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-      </div>
-      <div class="feature-content">
-        <div class="feature-title">Multi-Point Clicking</div>
-        <div class="feature-desc">Click up to 100 different points on a page. Add points visually with crosshair selection, drag markers to reposition, delete individually or all at once.</div>
-      </div>
-    </div>
-
-    <div class="feature">
-      <div class="feature-icon amber">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      </div>
-      <div class="feature-content">
-        <div class="feature-title">Pause & Resume</div>
-        <div class="feature-desc">Pause the clicker at any time and resume exactly where you left off. Your click count and points stay intact.</div>
-      </div>
-    </div>
-
-    <div class="feature">
-      <div class="feature-icon rose">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-      </div>
-      <div class="feature-content">
-        <div class="feature-title">Iframe Support</div>
-        <div class="feature-desc">Click inside embedded frames and iframes on supported websites.</div>
-      </div>
-    </div>
-
-    <div class="feature">
-      <div class="feature-icon cyan">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 00-2 2v.18a2 2 0 01-1 1.73l-.43.25a2 2 0 01-2 0l-.15-.08a2 2 0 00-2.73.73l-.22.38a2 2 0 00.73 2.73l.15.1a2 2 0 011 1.72v.51a2 2 0 01-1 1.74l-.15.09a2 2 0 00-.73 2.73l.22.38a2 2 0 002.73.73l.15-.08a2 2 0 012 0l.43.25a2 2 0 011 1.73V20a2 2 0 002 2h.44a2 2 0 002-2v-.18a2 2 0 011-1.73l.43-.25a2 2 0 012 0l.15.08a2 2 0 002.73-.73l.22-.39a2 2 0 00-.73-2.73l-.15-.08a2 2 0 01-1-1.74v-.5a2 2 0 011-1.74l.15-.09a2 2 0 00.73-2.73l-.22-.38a2 2 0 00-2.73-.73l-.15.08a2 2 0 01-2 0l-.43-.25a2 2 0 01-1-1.73V4a2 2 0 00-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
-      </div>
-      <div class="feature-content">
-        <div class="feature-title">Per-Site Settings</div>
-        <div class="feature-desc">Your click interval and jitter preferences are now saved per website. Switch between sites and your settings follow automatically.</div>
-      </div>
-    </div>
-
-    <div class="cta">
-      <p class="cta-text">Open any website and press <b>Alt+Z</b> to show the widget, or use the extension popup.</p>
-    </div>
-
-    <div class="footer">
-      <a href="https://chromewebstore.google.com/detail/speed-auto-clicker/ogdcfemilkmkkdpnhpkmilfnlnpiedkl">Rate on Chrome Web Store</a>
-      &nbsp;&middot;&nbsp;
-      <a href="https://www.buymeacoffee.com/speedautoclicker">Buy Me a Coffee</a>
+    <h1><img src="icon128.png" width="42" height="42" alt=""> Speed Auto Clicker <span class="accent">v3.0</span></h1>
+    <p class="hero-sub">The most powerful auto clicker for Chrome just got a complete overhaul.<br>Multi-point targeting, a floating widget, smart humanization — and much more.</p>
+    <div class="hero-pills">
+      <span class="hero-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg> Floating Widget <span class="new">NEW</span></span>
+      <span class="hero-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2"><circle cx="12" cy="12" r="2"/><line x1="12" y1="2" x2="12" y2="8"/><line x1="12" y1="16" x2="12" y2="22"/><line x1="2" y1="12" x2="8" y2="12"/><line x1="16" y1="12" x2="22" y2="12"/></svg> Multi-Point <span class="new">NEW</span></span>
+      <span class="hero-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg> Humanize <span class="new">NEW</span></span>
+      <span class="hero-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Pause &amp; Resume <span class="new">NEW</span></span>
     </div>
   </div>
+
+  <!-- ==================== FEATURE SHOWCASE ==================== -->
+  <div class="sec">
+    <h2 style="text-align:center">What's New</h2>
+    <p style="text-align:center;font-size:16px;color:#6b7280;margin-bottom:8px">Everything you've been asking for, and then some.</p>
+
+    <!-- 1. Floating Widget -->
+    <div class="showcase">
+      <div class="showcase-vis" style="background:linear-gradient(135deg,#ecfeff,#e0f2fe)">
+        <div class="wa">
+          <div class="wa-grip">&middot;&middot;&middot; &middot;&middot;&middot;</div>
+          <div class="wa-btn wa-del"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg></div>
+          <div class="wa-row">
+            <span>PTS</span><span>CYC</span><span>CLK</span>
+            <span class="v"><span class="wa-p0">0</span><span class="wa-p1">1</span><span class="wa-p2">2</span><span class="wa-p3">3</span><i style="visibility:hidden">0</i></span>
+            <span class="v"><span class="wa-y0">0</span><span class="wa-y1">1</span><i style="visibility:hidden">0</i></span>
+            <span class="v"><span class="wa-c0">0</span><span class="wa-c1">1</span><span class="wa-c2">2</span><span class="wa-c3">3</span><i style="visibility:hidden">0</i></span>
+          </div>
+          <div class="wa-btn wa-play">
+            <svg class="wa-play-i" width="18" height="18" viewBox="0 0 24 24" fill="#fff"><polygon points="6 3 20 12 6 21"/></svg>
+            <svg class="wa-pause-i" width="18" height="18" viewBox="0 0 24 24" fill="#fff"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg>
+          </div>
+          <div class="wa-int"><i>&lsaquo;</i> 1.0 <i>&rsaquo;</i></div>
+          <div class="wa-btn wa-add"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="2"/><line x1="12" y1="2" x2="12" y2="8"/><line x1="12" y1="16" x2="12" y2="22"/><line x1="2" y1="12" x2="8" y2="12"/><line x1="16" y1="12" x2="22" y2="12"/></svg></div>
+          <div class="wa-grip">&middot;&middot;&middot; &middot;&middot;&middot;</div>
+        </div>
+      </div>
+      <div class="showcase-body">
+        <div class="showcase-label cy">ALWAYS ON SCREEN</div>
+        <div class="showcase-title">Floating Widget</div>
+        <div class="showcase-desc">A glassmorphic control panel that lives on your page. Start, stop, add click points, and view live stats — all without opening the popup. Drag it anywhere you want.</div>
+      </div>
+    </div>
+
+    <!-- 2. Multi-Point -->
+    <div class="showcase rev">
+      <div class="showcase-vis" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe)">
+        <div class="xh-demo">
+          <div class="ln" style="top:12%"></div><div class="ln" style="top:24%"></div>
+          <div class="ln" style="top:36%;width:70%"></div><div class="ln" style="top:48%"></div>
+          <div class="ln" style="top:60%;width:80%"></div><div class="ln" style="top:72%"></div>
+          <div class="ln" style="top:88%;width:60%"></div>
+          <div class="xh xh1"><svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="7" stroke="#7c3aed" stroke-width="2"/><circle cx="18" cy="18" r="3" stroke="#7c3aed" stroke-width="1.5" opacity=".5"/><line x1="18" y1="2" x2="18" y2="10" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/><line x1="18" y1="26" x2="18" y2="34" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="18" x2="10" y2="18" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/><line x1="26" y1="18" x2="34" y2="18" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <div class="xh xh2"><svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="7" stroke="#7c3aed" stroke-width="2"/><circle cx="18" cy="18" r="3" stroke="#7c3aed" stroke-width="1.5" opacity=".5"/><line x1="18" y1="2" x2="18" y2="10" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/><line x1="18" y1="26" x2="18" y2="34" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="18" x2="10" y2="18" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/><line x1="26" y1="18" x2="34" y2="18" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <div class="xh xh3"><svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="7" stroke="#7c3aed" stroke-width="2"/><circle cx="18" cy="18" r="3" stroke="#7c3aed" stroke-width="1.5" opacity=".5"/><line x1="18" y1="2" x2="18" y2="10" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/><line x1="18" y1="26" x2="18" y2="34" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="18" x2="10" y2="18" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/><line x1="26" y1="18" x2="34" y2="18" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/></svg></div>
+        </div>
+      </div>
+      <div class="showcase-body">
+        <div class="showcase-label vi">PRECISION TARGETING</div>
+        <div class="showcase-title">Multi-Point Clicking</div>
+        <div class="showcase-desc">Place up to 100 click targets anywhere on the page. Each target ripples when clicked. Drag to reposition, delete individually or clear all. No more single-point limitations.</div>
+      </div>
+    </div>
+
+    <!-- 3. Smart Humanize -->
+    <div class="showcase">
+      <div class="showcase-vis" style="background:linear-gradient(135deg,#fffbeb,#fef3c7)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;align-self:flex-start">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span style="font-size:12px;font-weight:700;color:#92400e;letter-spacing:.3px">CLICK TIMELINE</span>
+        </div>
+        <div style="width:100%">
+          <div style="font-size:10px;font-weight:600;color:#78716c;margin-bottom:6px">Regular (1.0s)</div>
+          <div class="hz-row">
+            <div class="hz-line"></div>
+            <div class="hz-dot cy r1" style="left:0;top:5px"></div>
+            <div class="hz-dot cy r2" style="left:25%;top:5px"></div>
+            <div class="hz-dot cy r3" style="left:50%;top:5px"></div>
+            <div class="hz-dot cy r4" style="left:75%;top:5px"></div>
+            <div class="hz-dot cy r5" style="right:0;top:5px"></div>
+          </div>
+        </div>
+        <div style="width:100%">
+          <div style="font-size:10px;font-weight:600;color:#78716c;margin-bottom:6px">Humanized (&pm;10%)</div>
+          <div class="hz-row">
+            <div class="hz-line"></div>
+            <div class="hz-dot am h1" style="left:0;top:5px"></div>
+            <div class="hz-dot am h2" style="left:15%;top:5px"></div>
+            <div class="hz-dot am h3" style="left:49%;top:5px"></div>
+            <div class="hz-dot am h4" style="left:61%;top:5px"></div>
+            <div class="hz-dot am h5" style="left:93%;top:5px"></div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:center;gap:12px;margin-top:4px">
+          <div style="font-size:20px;font-weight:800;color:#0891b2;font-family:'SF Mono',Monaco,monospace">1.0<span style="font-size:11px;color:#9ca3af">s</span></div>
+          <div style="color:#d1d5db;font-size:16px;padding-top:4px">&rarr;</div>
+          <div style="font-size:20px;font-weight:800;color:#d97706;font-family:'SF Mono',Monaco,monospace">0.9-1.1<span style="font-size:11px;color:#9ca3af">s</span></div>
+        </div>
+      </div>
+      <div class="showcase-body">
+        <div class="showcase-label" style="color:#d97706">NATURAL TIMING</div>
+        <div class="showcase-title">Smart Humanize</div>
+        <div class="showcase-desc">Toggle Humanize mode to add &pm;10% random variation to every click. Natural, human-like timing that won't trigger anti-bot detection. The randomization adapts to any interval you set.</div>
+      </div>
+    </div>
+
+    <!-- 4. Pause & Resume -->
+    <div class="showcase rev">
+      <div class="showcase-vis" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5)">
+        <div class="viz-pause">
+          <div class="state">
+            <div class="ico play"><svg width="28" height="28" viewBox="0 0 24 24" fill="#06b6d4"><polygon points="6 3 20 12 6 21"/></svg></div>
+            <div class="pill run">Running</div>
+          </div>
+          <span style="color:#d1d5db;font-size:22px">&harr;</span>
+          <div class="state">
+            <div class="ico pau"><svg width="28" height="28" viewBox="0 0 24 24" fill="#d97706"><rect x="5" y="3" width="5" height="18" rx="1.5"/><rect x="14" y="3" width="5" height="18" rx="1.5"/></svg></div>
+            <div class="pill pau">Paused</div>
+          </div>
+        </div>
+      </div>
+      <div class="showcase-body">
+        <div class="showcase-label" style="color:#059669">INSTANT CONTROL</div>
+        <div class="showcase-title">Pause &amp; Resume</div>
+        <div class="showcase-desc">Pause anytime and resume right where you left off. Click count, cycles, and target positions stay intact. No need to set everything up again.</div>
+      </div>
+    </div>
+
+    <!-- 5. Per-Site Settings -->
+    <div class="showcase">
+      <div class="showcase-vis" style="background:linear-gradient(135deg,#f8fafc,#f1f5f9)">
+        <div class="viz-sites">
+          <div class="viz-site">
+            <div class="url"><div class="dot" style="background:#4285f4"></div>google.com</div>
+            <div class="val">Interval: <b>0.5s</b></div>
+            <div class="val">Humanize: <b>ON</b></div>
+          </div>
+          <div class="viz-site">
+            <div class="url"><div class="dot" style="background:#ff4500"></div>reddit.com</div>
+            <div class="val">Interval: <b>2.0s</b></div>
+            <div class="val">Humanize: <b>OFF</b></div>
+          </div>
+        </div>
+      </div>
+      <div class="showcase-body">
+        <div class="showcase-label" style="color:#64748b">REMEMBERS EVERYTHING</div>
+        <div class="showcase-title">Per-Site Settings</div>
+        <div class="showcase-desc">Your interval and humanize preferences save automatically per website. Come back tomorrow — your setup is exactly where you left it.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PIN IT ANIMATION ==================== -->
+  <div class="sec">
+    <div class="sec-head">
+      <div class="sec-ico cy">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21"/></svg>
+      </div>
+      <div class="sec-title">Haven't pinned it yet?</div>
+    </div>
+    <p class="sec-desc">Pin the extension to your toolbar for one-click access. Click the puzzle piece, find Speed Auto Clicker, and hit the pin icon.</p>
+
+    <div class="brow" id="brow">
+      <div class="brow-tabs">
+        <div class="brow-tab">
+          <svg width="14" height="14" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="#4285f4"/><path d="M24 12a12 12 0 00-8.5 20.5L24 24V12z" fill="#ea4335"/><path d="M24 12v12l8.5 8.5A12 12 0 0024 12z" fill="#fbbc05"/><path d="M15.5 32.5A12 12 0 0024 36V24z" fill="#34a853"/><circle cx="24" cy="24" r="5" fill="#fff"/></svg>
+          <span>My Website</span><span class="brow-tab-x">&times;</span>
+        </div>
+        <span class="brow-tab-new">+</span>
+      </div>
+      <div class="brow-bar">
+        <div class="brow-nav">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><path d="M23 4v6h-6"/><path d="M20.49 15A9 9 0 115.64 5.64L1 10"/></svg>
+        </div>
+        <div class="brow-url">mywebsite.com</div>
+        <div class="brow-icons">
+          <div class="brow-ic sac-slot"></div>
+          <div class="brow-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="#9aa0a6"><path d="M20.5 11H19V7a2 2 0 00-2-2h-4V3.5a2.5 2.5 0 00-5 0V5H4a2 2 0 00-2 2v3.8h1.5a2.7 2.7 0 010 5.4H2V20a2 2 0 002 2h3.8v-1.5a2.7 2.7 0 015.4 0V22H17a2 2 0 002-2v-4h1.5a2.5 2.5 0 000-5z"/></svg></div>
+          <div class="brow-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <div class="brow-ic"><svg width="4" height="16" viewBox="0 0 4 16" fill="#5f6368"><circle cx="2" cy="2" r="1.5"/><circle cx="2" cy="8" r="1.5"/><circle cx="2" cy="14" r="1.5"/></svg></div>
+        </div>
+      </div>
+      <div class="brow-body" style="height:400px">
+        <div class="fake dim">
+          <div class="fk hd"></div><div class="fk w90"></div><div class="fk w80"></div><div class="fk w70"></div>
+          <div class="fk-img"></div><div class="fk w90"></div><div class="fk w80"></div><div class="fk w50"></div>
+          <div class="fk w60"></div><div class="fk w70"></div><div class="fk w90"></div>
+        </div>
+        <div class="ext-drop">
+          <div class="ext-h"><b>Extensions</b><span>&times;</span></div>
+          <div class="ext-sub">No access needed<br>These extensions don't need to see and change information on this site.</div>
+          <div class="ext-row">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#6366f1"><polygon points="6 3 20 12 6 21"/></svg>
+            <span class="ext-row-name">Speed Auto Clicker</span>
+            <div class="ext-row-pin">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#9aa0a6"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5v6h2v-6h5v-2z"/></svg>
+              <svg class="pin-b" width="16" height="16" viewBox="0 0 24 24" fill="#1a73e8"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5v6h2v-6h5v-2z"/></svg>
+            </div>
+          </div>
+          <div class="ext-sep"></div>
+          <div class="ext-manage">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5f6368" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+            <span>Manage Extensions</span>
+          </div>
+        </div>
+        <div class="target t1" style="left:22%;top:32%"><svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="7" stroke="#7c3aed" stroke-width="2"/><circle cx="18" cy="18" r="3" stroke="#7c3aed" stroke-width="1.5" opacity=".5"/><line x1="18" y1="2" x2="18" y2="10" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/><line x1="18" y1="26" x2="18" y2="34" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="18" x2="10" y2="18" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/><line x1="26" y1="18" x2="34" y2="18" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="target t2" style="left:52%;top:55%"><svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="7" stroke="#7c3aed" stroke-width="2"/><circle cx="18" cy="18" r="3" stroke="#7c3aed" stroke-width="1.5" opacity=".5"/><line x1="18" y1="2" x2="18" y2="10" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/><line x1="18" y1="26" x2="18" y2="34" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="18" x2="10" y2="18" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/><line x1="26" y1="18" x2="34" y2="18" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="target t3" style="left:35%;top:75%"><svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="7" stroke="#7c3aed" stroke-width="2"/><circle cx="18" cy="18" r="3" stroke="#7c3aed" stroke-width="1.5" opacity=".5"/><line x1="18" y1="2" x2="18" y2="10" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/><line x1="18" y1="26" x2="18" y2="34" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="18" x2="10" y2="18" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/><line x1="26" y1="18" x2="34" y2="18" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="wm">
+          <div class="wm-grip">··· ···</div>
+          <div class="wm-btn wm-del"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg></div>
+          <div class="wm-stats">
+            <span>PTS</span><span>CYC</span><span>CLK</span>
+            <span class="val pts-wrap">
+              <span class="pts-n pts0">0</span><span class="pts-n pts1">1</span><span class="pts-n pts2">2</span><span class="pts-n pts3">3</span><span style="visibility:hidden">0</span>
+            </span>
+            <span class="val cyc-wrap">
+              <span class="cyc-n cyc0">0</span><span class="cyc-n cyc1">1</span><span style="visibility:hidden">0</span>
+            </span>
+            <span class="val clk-wrap">
+              <span class="clk-n clk0">0</span><span class="clk-n clk1">1</span><span class="clk-n clk2">2</span><span class="clk-n clk3">3</span><span style="visibility:hidden">0</span>
+            </span>
+          </div>
+          <div class="wm-btn wm-play">
+            <svg class="wm-play-ico" width="18" height="18" viewBox="0 0 24 24" fill="#fff"><polygon points="6 3 20 12 6 21"/></svg>
+            <svg class="wm-pause-ico" width="18" height="18" viewBox="0 0 24 24" fill="#fff"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg>
+          </div>
+          <div class="wm-int"><span>&#8249;</span> 1.0 <span>&#8250;</span></div>
+          <div class="wm-btn wm-add"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="2"/><line x1="12" y1="2" x2="12" y2="8"/><line x1="12" y1="16" x2="12" y2="22"/><line x1="2" y1="12" x2="8" y2="12"/><line x1="16" y1="12" x2="22" y2="12"/></svg></div>
+          <div class="wm-grip">··· ···</div>
+        </div>
+      </div>
+
+      <div class="popup-over">
+        <div class="po-head"><svg width="16" height="16" viewBox="0 0 24 24" fill="#6366f1"><polygon points="6 3 20 12 6 21"/></svg> Speed Auto Clicker</div>
+        <div class="po-row"><div class="po-pm">-</div><span class="po-val">1.0s</span><div class="po-pm">+</div></div>
+        <div class="po-btn po-add"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Point</div>
+        <div class="po-btn po-play"><svg width="12" height="12" viewBox="0 0 24 24" fill="#06b6d4"><polygon points="6 3 20 12 6 21"/></svg> Start</div>
+      </div>
+
+      <div class="hl hl-puzzle" style="top:63px;left:calc(100% - 83px)"></div>
+      <div class="hl hl-pin" style="top:203px;left:calc(100% - 58px)"></div>
+      <div class="hl hl-sac" style="top:64px;left:calc(100% - 114px)"></div>
+
+      <svg class="ptr" width="28" height="34" viewBox="0 0 28 34" fill="none"><path d="M2 2l22 16-9 1.5-4.5 12z" fill="#1e293b" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg>
+
+      <div class="click-ring cr-puzzle" style="top:63px;left:calc(100% - 83px)"></div>
+      <div class="click-ring cr-pin" style="top:203px;left:calc(100% - 58px)"></div>
+      <div class="click-ring cr-sac" style="top:64px;left:calc(100% - 114px)"></div>
+      <div class="click-ring cr-add" style="top:165px;left:calc(100% - 116px)"></div>
+      <div class="click-ring cr-p1" style="top:211px;left:22%"></div>
+      <div class="click-ring cr-p2" style="top:303px;left:52%"></div>
+      <div class="click-ring cr-p3" style="top:383px;left:35%"></div>
+      <div class="click-ring cr-play" style="top:289px;left:calc(100% - 57px)"></div>
+
+      <div class="sac-tb"><svg width="22" height="22" viewBox="0 0 24 24" fill="#6366f1"><polygon points="6 3 20 12 6 21"/></svg></div>
+
+      <div class="brow-pause">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="#fff"><rect x="5" y="3" width="5" height="18" rx="1.5"/><rect x="14" y="3" width="5" height="18" rx="1.5"/></svg>
+        <span style="color:#fff;font-size:11px;font-weight:500;letter-spacing:.3px">PAUSED</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== CTA ==================== -->
+  <div class="cta">
+    <p style="font-size:18px;font-weight:500;color:#374151">You're all set. Open any website and start clicking.</p>
+    <p style="font-size:14px;color:#9ca3af;margin-top:6px">All your existing settings have been preserved.</p>
+  </div>
+
+  <!-- ==================== FOOTER ==================== -->
+  <div class="footer">
+    <a href="https://chromewebstore.google.com/detail/speed-auto-clicker/ogdcfemilkmkkdpnhpkmilfnlnpiedkl">Rate on Chrome Web Store</a>
+    &nbsp;&middot;&nbsp;
+    <a href="https://www.buymeacoffee.com/speedautoclicker">Buy Me a Coffee</a>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  var brow = document.getElementById('brow');
+  var loopTimer = null;
+  var paused = false;
+  var ANIM_DURATION = 20000;
+  var RESET_GAP = 800;
+
+  function play() {
+    paused = false;
+    brow.classList.remove('anim-paused');
+    brow.classList.remove('anim-active');
+    void brow.offsetWidth;
+    brow.classList.add('anim-active');
+  }
+
+  function startLoop() {
+    play();
+    clearInterval(loopTimer);
+    loopTimer = setInterval(function() {
+      if (paused) return;
+      brow.classList.remove('anim-active');
+      setTimeout(function() {
+        void brow.offsetWidth;
+        brow.classList.add('anim-active');
+      }, RESET_GAP);
+    }, ANIM_DURATION + RESET_GAP);
+  }
+
+  brow.addEventListener('click', function() {
+    if (paused) {
+      paused = false;
+      brow.classList.remove('anim-paused');
+    } else {
+      paused = true;
+      brow.classList.add('anim-paused');
+    }
+  });
+
+  startLoop();
+})();
+</script>
 </body>
 </html>
