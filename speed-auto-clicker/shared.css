@@ -66,7 +66,7 @@ h2 { font-size:26px; font-weight:700; margin-bottom:24px; }
 .ext-manage { display:flex; align-items:center; gap:10px; padding:10px 16px; font-size:13px; color:#5f6368; }
 
 /* ===== POPUP OVERLAY (schematic) ===== */
-.popup-over { position:absolute; top:72px; right:20px; width:190px; z-index:12; background:#fff; border-radius:12px; box-shadow:0 8px 32px rgba(0,0,0,.18); border:1px solid #e5e7eb; padding:14px; opacity:0; transform:translateY(-8px) scale(.96); }
+.popup-over { position:absolute; top:72px; right:106px; width:190px; z-index:12; background:#fff; border-radius:12px; box-shadow:0 8px 32px rgba(0,0,0,.18); border:1px solid #e5e7eb; padding:14px; opacity:0; transform:translateY(-8px) scale(.96); }
 .po-head { display:flex; align-items:center; gap:8px; margin-bottom:12px; font-size:12px; font-weight:700; color:#1e293b; }
 .po-row { display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:10px; font-size:11px; color:#64748b; }
 .po-val { font-size:16px; font-weight:700; color:#1e293b; font-family:'SF Mono',Monaco,monospace; }
@@ -150,10 +150,10 @@ h2 { font-size:26px; font-weight:700; margin-bottom:24px; }
   41%  { top:62px; left:calc(100% - 116px); opacity:1; transform:scale(.85) }
   42%  { top:62px; left:calc(100% - 116px); opacity:1; transform:scale(1) }
   43%  { top:62px; left:calc(100% - 116px); opacity:1; transform:scale(1) }
-  48%  { top:163px; left:calc(100% - 118px); opacity:1; transform:scale(1) }
-  49%  { top:163px; left:calc(100% - 118px); opacity:1; transform:scale(.85) }
-  50%  { top:163px; left:calc(100% - 118px); opacity:1; transform:scale(1) }
-  51%  { top:163px; left:calc(100% - 118px); opacity:1; transform:scale(1) }
+  48%  { top:163px; left:calc(100% - 203px); opacity:1; transform:scale(1) }
+  49%  { top:163px; left:calc(100% - 203px); opacity:1; transform:scale(.85) }
+  50%  { top:163px; left:calc(100% - 203px); opacity:1; transform:scale(1) }
+  51%  { top:163px; left:calc(100% - 203px); opacity:1; transform:scale(1) }
   56%  { top:209px; left:22%; opacity:1; transform:scale(1) }
   57%  { top:209px; left:22%; opacity:1; transform:scale(.85) }
   58%  { top:209px; left:22%; opacity:1; transform:scale(1) }
@@ -252,10 +252,19 @@ h2 { font-size:26px; font-weight:700; margin-bottom:24px; }
 .anim-active .target.t3::before { animation: rippleFill 2.1s 17.6s ease-out infinite none; }
 
 /* ===== SCROLL HINT ===== */
-.scroll-hint { text-align:center; padding:28px 0 40px; display:flex; flex-direction:column; align-items:center; gap:10px; }
-.scroll-hint-label { font-size:15px; font-weight:700; letter-spacing:.3px; color:#6366f1; animation:hintFade 2.5s ease-in-out infinite; }
-.scroll-hint-sub { font-size:13px; color:#9ca3af; margin-top:-4px; }
-.scroll-hint-arrow { width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg,rgba(99,102,241,.1),rgba(6,182,212,.1)); display:flex; align-items:center; justify-content:center; animation:hintBounce 2s ease-in-out infinite; box-shadow:0 4px 16px rgba(99,102,241,.12); }
+.scroll-hint { text-align:center; padding:28px 0 40px; display:flex; flex-direction:column; align-items:center; gap:10px; cursor:pointer; }
+.scroll-hint-label { font-size:15px; font-weight:700; letter-spacing:.3px; color:#6366f1; transition:font-size .6s, letter-spacing .6s; }
+.scroll-hint-sub { font-size:13px; color:#9ca3af; margin-top:-4px; transition:color .3s; }
+.scroll-hint:hover .scroll-hint-sub { color:#6b7280; }
+.scroll-hint-arrow { width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg,rgba(99,102,241,.1),rgba(6,182,212,.1)); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(99,102,241,.12); transition:background .6s, box-shadow .6s; }
+.scroll-hint-arrow svg { transition:stroke .6s; }
+.scroll-hint:hover .scroll-hint-arrow { box-shadow:0 6px 20px rgba(99,102,241,.25); }
+
+/* After first animation cycle — attention mode */
+.scroll-hint.bright .scroll-hint-label { font-size:16px; letter-spacing:.4px; background:linear-gradient(135deg,#6366f1,#06b6d4); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; animation:hintFade 2.5s ease-in-out infinite; }
+.scroll-hint.bright .scroll-hint-arrow { background:linear-gradient(135deg,#6366f1,#06b6d4); box-shadow:0 4px 16px rgba(99,102,241,.25); animation:hintBounce 2s ease-in-out infinite; }
+.scroll-hint.bright .scroll-hint-arrow svg { stroke:#fff; }
+
 @keyframes hintBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(10px)} }
 @keyframes hintFade { 0%,100%{opacity:.6} 50%{opacity:1} }
 
