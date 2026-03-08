@@ -136,7 +136,7 @@
       <div class="click-ring cr-puzzle" style="top:63px;left:calc(100% - 83px)"></div>
       <div class="click-ring cr-pin" style="top:203px;left:calc(100% - 58px)"></div>
       <div class="click-ring cr-sac" style="top:64px;left:calc(100% - 114px)"></div>
-      <div class="click-ring cr-add" style="top:165px;left:calc(100% - 116px)"></div>
+      <div class="click-ring cr-add" style="top:165px;left:calc(100% - 201px)"></div>
       <div class="click-ring cr-p1" style="top:211px;left:22%"></div>
       <div class="click-ring cr-p2" style="top:303px;left:52%"></div>
       <div class="click-ring cr-p3" style="top:383px;left:35%"></div>
@@ -166,10 +166,13 @@
 
 </div>
 
+<script src="../confetti.js"></script>
 <script src="../cards.js"></script>
 <script>
   renderCards(document.getElementById('cards'));
-  initBrowserAnim();
+  launchConfetti(function() {
+    initBrowserAnim();
+  });
 </script>
 </body>
 </html>
