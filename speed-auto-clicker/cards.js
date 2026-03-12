@@ -2,6 +2,10 @@
 (function() {
   'use strict';
 
+  var SCRIPT_BASE = (document.currentScript && document.currentScript.src)
+    ? document.currentScript.src.replace(/[^/]*$/, '')
+    : '';
+
   var XH = '<svg viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="7" stroke="#7c3aed" stroke-width="2"/><circle cx="18" cy="18" r="3" stroke="#7c3aed" stroke-width="1.5" opacity=".5"/><line x1="18" y1="2" x2="18" y2="10" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/><line x1="18" y1="26" x2="18" y2="34" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="18" x2="10" y2="18" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/><line x1="26" y1="18" x2="34" y2="18" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/></svg>';
 
   var GRAB = '<svg class="wa-grab" viewBox="0 0 56 64" fill="none"><g stroke="#94a3b8" stroke-width="2" fill="#fff" stroke-linejoin="round"><rect x="1" y="22" width="9" height="20" rx="4.5"/><rect x="12" y="8" width="9" height="34" rx="4.5"/><rect x="23" y="2" width="9" height="40" rx="4.5"/><rect x="34" y="10" width="9" height="32" rx="4.5"/><rect x="45" y="18" width="9" height="24" rx="4.5"/><rect x="2" y="36" width="52" height="24" rx="11"/></g></svg>';
@@ -331,7 +335,7 @@
       var extra = card.extraClass ? ' ' + card.extraClass : '';
       var vis;
       if (card.useImg) {
-        vis = '<div class="showcase-img"><img src="' + card.imgSrc + '" alt="' + card.title + '"></div>';
+        vis = '<div class="showcase-img"><img src="' + SCRIPT_BASE + card.imgSrc + '" alt="' + card.title + '"></div>';
       } else {
         var inner = typeof card.visual === 'function' ? card.visual() : card.visual;
         vis = '<div class="showcase-vis" style="background:' + card.bg + '">' + inner + '</div>';
